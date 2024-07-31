@@ -45,12 +45,12 @@ output "https_proxy" {
   value       = google_compute_target_https_proxy.default[*].self_link
 }
 
+output "certificate_map" {
+  description = "The certificate map used by this module."
+  value       = google_certificate_manager_certificate_map.default
+}
+
 output "url_map" {
   description = "The default URL map used by this module."
   value       = google_compute_url_map.default[*].self_link
-}
-
-output "ssl_certificate_created" {
-  description = "The SSL certificate create from key/pem"
-  value       = google_compute_ssl_certificate.default[*].self_link
 }

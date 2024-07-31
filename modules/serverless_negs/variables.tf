@@ -22,6 +22,7 @@ variable "project" {
 variable "name" {
   description = "Name for the forwarding rule and prefix for supporting resources"
   type        = string
+  default     = "default"
 }
 
 variable "create_address" {
@@ -57,6 +58,7 @@ variable "ipv6_address" {
 
 variable "backends" {
   description = "Map backend indices to list of backend maps."
+  default     = {}
   type = map(object({
     project                 = optional(string)
     protocol                = optional(string)
@@ -138,7 +140,7 @@ variable "backends" {
 variable "create_url_map" {
   description = "Set to `false` if url_map variable is provided."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "url_map" {
@@ -154,45 +156,9 @@ variable "http_forward" {
 }
 
 variable "ssl" {
-  description = "Set to `true` to enable SSL support. If `true` then at least one of these are required: 1) `ssl_certificates` OR 2) `create_ssl_certificate` set to `true` and `private_key/certificate` OR  3) `managed_ssl_certificate_domains`, OR 4) `certificate_map`"
+  description = "Set to `true` to enable SSL support."
   type        = bool
-  default     = false
-}
-
-variable "create_ssl_certificate" {
-  description = "If `true`, Create certificate using `private_key/certificate`"
-  type        = bool
-  default     = false
-}
-
-variable "ssl_certificates" {
-  description = "SSL cert self_link list. Requires `ssl` to be set to `true`"
-  type        = list(string)
-  default     = []
-}
-
-variable "private_key" {
-  description = "Content of the private SSL key. Requires `ssl` to be set to `true` and `create_ssl_certificate` set to `true`"
-  type        = string
-  default     = null
-}
-
-variable "certificate" {
-  description = "Content of the SSL certificate. Requires `ssl` to be set to `true` and `create_ssl_certificate` set to `true`"
-  type        = string
-  default     = null
-}
-
-variable "managed_ssl_certificate_domains" {
-  description = "Create Google-managed SSL certificates for specified domains. Requires `ssl` to be set to `true`"
-  type        = list(string)
-  default     = []
-}
-
-variable "certificate_map" {
-  description = "Certificate Map ID in format projects/{project}/locations/global/certificateMaps/{name}. Identifies a certificate map associated with the given target proxy.  Requires `ssl` to be set to `true`"
-  type        = string
-  default     = null
+  default     = true
 }
 
 variable "ssl_policy" {
@@ -222,13 +188,7 @@ variable "security_policy" {
 variable "https_redirect" {
   description = "Set to `true` to enable https redirect on the lb."
   type        = bool
-  default     = false
-}
-
-variable "random_certificate_suffix" {
-  description = "Bool to enable/disable random certificate name generation. Set and keep this to true if you need to change the SSL cert."
-  type        = bool
-  default     = false
+  default     = true
 }
 
 variable "labels" {
@@ -240,7 +200,7 @@ variable "labels" {
 variable "load_balancing_scheme" {
   description = "Load balancing scheme type (EXTERNAL for classic external load balancer, EXTERNAL_MANAGED for Envoy-based load balancer, and INTERNAL_SELF_MANAGED for traffic director)"
   type        = string
-  default     = "EXTERNAL"
+  default     = "EXTERNAL_MANAGED"
 }
 
 variable "network" {
