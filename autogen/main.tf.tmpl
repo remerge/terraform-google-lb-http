@@ -119,49 +119,17 @@ resource "google_compute_target_https_proxy" "default" {
   name    = "${var.name}-https-proxy"
   url_map = local.url_map
 
-  ssl_certificates            = compact(concat(var.ssl_certificates, google_compute_ssl_certificate.default[*].self_link, google_compute_managed_ssl_certificate.default[*].self_link, ), )
-  certificate_map             = var.certificate_map != null ? "//certificatemanager.googleapis.com/${var.certificate_map}" : null
+  certificate_map             = "//certificatemanager.googleapis.com/${google_certificate_manager_certificate_map.default[0].id}"
   ssl_policy                  = var.ssl_policy
   quic_override               = var.quic == null ? "NONE" : var.quic ? "ENABLE" : "DISABLE"
   server_tls_policy           = var.server_tls_policy
   http_keep_alive_timeout_sec = var.http_keep_alive_timeout_sec
 }
 
-resource "google_compute_ssl_certificate" "default" {
-  project     = var.project
-  count       = var.ssl && var.create_ssl_certificate ? 1 : 0
-  name_prefix = "${var.name}-certificate-"
-  private_key = var.private_key
-  certificate = var.certificate
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "random_id" "certificate" {
-  count       = var.random_certificate_suffix == true ? 1 : 0
-  byte_length = 4
-  prefix      = "${var.name}-cert-"
-
-  keepers = {
-    domains = join(",", var.managed_ssl_certificate_domains)
-  }
-}
-
-resource "google_compute_managed_ssl_certificate" "default" {
-  provider = google-beta
-  project  = var.project
-  count    = var.ssl && length(var.managed_ssl_certificate_domains) > 0 ? 1 : 0
-  name     = var.random_certificate_suffix == true ? random_id.certificate[0].hex : "${var.name}-cert"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  managed {
-    domains = var.managed_ssl_certificate_domains
-  }
+resource "google_certificate_manager_certificate_map" "default" {
+  project = var.project
+  count   = var.ssl ? 1 : 0
+  name    = var.name
 }
 
 resource "google_compute_url_map" "default" {
