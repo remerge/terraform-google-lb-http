@@ -14,36 +14,23 @@
  * limitations under the License.
  */
 
-provider "google" {
-  project = var.project_id
-}
-
-provider "google-beta" {
-  project = var.project_id
-}
-
-# [START cloudloadbalancing_ext_http_cloudrun]
 module "lb-http" {
   source  = "terraform-google-modules/lb-http/google//modules/serverless_negs"
   version = "~> 12.0"
 
-  name    = var.lb_name
+  name    = "tf-cr-lb-1"
   project = var.project_id
 
-  ssl                             = var.ssl
-  managed_ssl_certificate_domains = [var.domain]
-  https_redirect                  = var.ssl
-  labels                          = { "example-label" = "cloud-run-example" }
+  ssl            = false
+  https_redirect = false
+  labels         = { "example-label" = "cloud-run-example" }
 
   backends = {
     default = {
-      description = null
-      groups = [
-        {
-          group = google_compute_region_network_endpoint_group.serverless_neg.id
-        }
-      ]
-      enable_cdn = false
+      description             = null
+      groups                  = []
+      serverless_neg_backends = [{ region : "us-central1", type : "cloud-run", service : { name : google_cloud_run_service.default.name } }]
+      enable_cdn              = false
 
       iap_config = {
         enable = false
@@ -55,19 +42,9 @@ module "lb-http" {
   }
 }
 
-resource "google_compute_region_network_endpoint_group" "serverless_neg" {
-  provider              = google-beta
-  name                  = "serverless-neg"
-  network_endpoint_type = "SERVERLESS"
-  region                = var.region
-  cloud_run {
-    service = google_cloud_run_service.default.name
-  }
-}
-
 resource "google_cloud_run_service" "default" {
-  name     = "example"
-  location = var.region
+  name     = "example-1"
+  location = "us-central1"
   project  = var.project_id
 
   template {
@@ -93,4 +70,3 @@ resource "google_cloud_run_service_iam_member" "public-access" {
   role     = "roles/run.invoker"
   member   = "allUsers"
 }
-# [END cloudloadbalancing_ext_http_cloudrun]
