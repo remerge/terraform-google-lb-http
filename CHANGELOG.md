@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [12.1.4](https://github.com/terraform-google-modules/terraform-google-lb-http/compare/v12.1.3...v12.1.4) (2025-03-26)
+
+
+### Bug Fixes
+
+* added types for ip_address_internal_managed_http and https output variables ([#495](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/495)) ([dd61bed](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/dd61bedf3bbdb1fbf9561609399a37c61f9aec5f))
+
+## [12.1.3](https://github.com/terraform-google-modules/terraform-google-lb-http/compare/v12.1.2...v12.1.3) (2025-03-21)
+
+
+### Features
+
+* support for internal cross-regional load balancer ([#490](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/490)) ([6200076](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/62000761ea7926f4caa8b3a1c915a571c2139bde))
+
+## [12.1.2](https://github.com/terraform-google-modules/terraform-google-lb-http/compare/v12.1.1...v12.1.2) (2025-03-05)
+
+
+### Bug Fixes
+
+* support providing null port for creating firewall to support USE_SERVING_PORT ([#488](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/488)) ([12caacc](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/12caaccb16b7ee4cfb38181c12a5b08769cf4955))
+
+## [12.1.1](https://github.com/terraform-google-modules/terraform-google-lb-http/compare/v12.1.0...v12.1.1) (2025-02-28)
+
+
+### Bug Fixes
+
+* Update connection metadata to change version from ~&gt; 12.0 to ^12.0 ([#486](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/486)) ([ed01820](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/ed018203b9bd2ed474fe776f34c002dd2d83758c))
+
+## [12.1.0](https://github.com/terraform-google-modules/terraform-google-lb-http/compare/v12.0.0...v12.1.0) (2025-02-24)
+
+
+### Features
+
+* Add frontend and backend modules ([#461](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/461)) ([05fdae5](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/05fdae5f8cb5789d15204382b3586e1f04acf61f))
+* update connection metadata and url_map creation in modules/frontend ([#471](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/471)) ([fe77470](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/fe774703ed363862ec5d801b4290e4b9133b392f))
+
+
+### Bug Fixes
+
+* update metadata and fix neg creation in modules/backend ([#463](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/463)) ([1ed89f0](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/1ed89f07c779a563ad153893e26aad3a4d495275))
+* updated iap_config behavior to match TPG 6.0 ([#469](https://github.com/terraform-google-modules/terraform-google-lb-http/issues/469)) ([279c8e8](https://github.com/terraform-google-modules/terraform-google-lb-http/commit/279c8e877f854f082adf9ca83f8b3ad00c62e4ff))
+
 ## [12.0.0](https://github.com/terraform-google-modules/terraform-google-lb-http/compare/v11.1.0...v12.0.0) (2024-09-17)
 
 

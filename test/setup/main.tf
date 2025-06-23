@@ -16,7 +16,7 @@
 
 module "project-ci-lb-http" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 16.0"
+  version = "~> 17.0"
 
   name                        = "ci-int-lb-http"
   random_project_id           = true
@@ -26,6 +26,7 @@ module "project-ci-lb-http" {
   default_service_account     = "keep"
   disable_dependent_services  = false
   disable_services_on_destroy = false
+  deletion_policy             = "DELETE"
 
   activate_apis = [
     "cloudresourcemanager.googleapis.com",
@@ -35,12 +36,13 @@ module "project-ci-lb-http" {
     "run.googleapis.com",
     "iam.googleapis.com",
     "certificatemanager.googleapis.com",
+    "vpcaccess.googleapis.com",
   ]
 }
 
 module "project-ci-lb-http-1" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 16.0"
+  version = "~> 17.0"
 
   name                        = "ci-int-lb-http-1"
   random_project_id           = true
@@ -50,6 +52,7 @@ module "project-ci-lb-http-1" {
   default_service_account     = "keep"
   disable_dependent_services  = false
   disable_services_on_destroy = false
+  deletion_policy             = "DELETE"
 
   activate_apis = [
     "cloudresourcemanager.googleapis.com",
@@ -59,5 +62,6 @@ module "project-ci-lb-http-1" {
     "run.googleapis.com",
     "iam.googleapis.com",
     "certificatemanager.googleapis.com",
+    "vpcaccess.googleapis.com",
   ]
 }
